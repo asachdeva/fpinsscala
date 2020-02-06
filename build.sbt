@@ -8,7 +8,6 @@ organization in ThisBuild := "asachdeva"
 
 crossScalaVersions in ThisBuild := Seq("2.12.10", "2.13.1")
 
-
 promptTheme := PromptTheme(List(
   text(_ => "[asachdeva]", fg(64)).padRight(" λ ")
  ))
