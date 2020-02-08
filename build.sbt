@@ -8,9 +8,11 @@ organization in ThisBuild := "asachdeva"
 
 crossScalaVersions in ThisBuild := Seq("2.12.10", "2.13.1")
 
-promptTheme := PromptTheme(List(
-  text(_ => "[asachdeva]", fg(64)).padRight(" λ ")
- ))
+promptTheme := PromptTheme(
+  List(
+    text(_ => "[asachdeva]", fg(64)).padRight(" λ ")
+  )
+)
 
 def uuidDep(v: String): Seq[ModuleID] =
   CrossVersion.partialVersion(v) match {
@@ -34,9 +36,11 @@ lazy val commonSettings = Seq(
   resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ => false },
+  pomIncludeRepository := { _ =>
+    false
+  },
   pomExtra :=
-      <developers>
+    <developers>
         <developer>
           <id>asachdeva</id>
           <name>Akshay Sachdeva</name>
@@ -54,10 +58,11 @@ lazy val examplesDependencies = Seq(
   Libraries.zioCore,
   Libraries.zioCats,
   Libraries.log4CatsSlf4j,
-  Libraries.logback % Runtime,
+  Libraries.logback % Runtime
 )
 
-lazy val root = project.in(file("."))
+lazy val root = project
+  .in(file("."))
   .aggregate(`fpinscala`)
   .settings(noPublish)
 
@@ -68,10 +73,10 @@ lazy val noPublish = Seq(
   skip in publish := true
 )
 
-lazy val `fpinscala` = project.in(file("core"))
+lazy val `fpinscala` = project
+  .in(file("core"))
   .settings(commonSettings: _*)
   .settings(libraryDependencies += Libraries.http4sClient % Test)
-
 
 // CI build
 addCommandAlias("buildFPInScala", ";clean;+test;")
