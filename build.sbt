@@ -29,11 +29,11 @@ lazy val commonSettings = Seq(
     Libraries.fs2Core,
     Libraries.http4sServer,
     Libraries.http4sDsl,
-    Libraries.scalaTest  % Test,
+    Libraries.scalaTest % Test,
     Libraries.scalaCheck % Test
   ),
   libraryDependencies ++= uuidDep(scalaVersion.value),
-  resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
+  resolvers += "Apache public".at("https://repository.apache.org/content/groups/public/"),
   publishMavenStyle := true,
   publishArtifact in Test := false,
   pomIncludeRepository := { _ =>
