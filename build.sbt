@@ -32,7 +32,6 @@ lazy val commonSettings = Seq(
   ),
   libraryDependencies ++= uuidDep(scalaVersion.value),
   resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
-  scalafmtOnCompile := true,
   publishMavenStyle := true,
   publishArtifact in Test := false,
   pomIncludeRepository := { _ => false },
