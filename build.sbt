@@ -36,9 +36,7 @@ lazy val commonSettings = Seq(
   resolvers += "Apache public".at("https://repository.apache.org/content/groups/public/"),
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ =>
-    false
-  },
+  pomIncludeRepository := { _ => false },
   pomExtra :=
     <developers>
         <developer>
