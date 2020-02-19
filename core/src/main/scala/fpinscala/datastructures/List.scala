@@ -73,7 +73,6 @@ object List {
   def init[A](l: List[A]): List[A] =
     l match {
       case Nil        => sys.error("init on an empty list")
-      case (_, Nil)   => Nil
       case Cons(h, t) => Cons(h, init(t))
     }
 
@@ -91,7 +90,7 @@ object List {
 
   // Ex 3.9
   def length[A](as: List[A]): Int =
-    folRight(as, 0)((_, acc) => acc + 1)
+    foldRight(as, 0)((_, acc) => acc + 1)
 
   def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B =
     as match {
@@ -102,13 +101,17 @@ object List {
   // Ex 3.11
   def sum3(as: List[Int]): Int =
     foldLeft(as, 0)(_ + _)
+
   def product3(as: List[Double]): Double =
     foldLeft(as, 1.0)(_ * _)
+
   def length2[A](as: List[A]): Int =
-    foldLeft(as, 0)((acc, h) => acc + 1)
+    foldLeft(as, 0)((acc, _) => acc + 1)
 
   // Ex 3.12
   def reverse[A](as: List[A]): List[A] =
     foldLeft(as, List[A]())((acc, h) => Cons(h, acc))
+
+  // Ex 3.13
 
 }
