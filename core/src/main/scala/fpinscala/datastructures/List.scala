@@ -133,7 +133,7 @@ object List {
     foldLeft(as, List[A]())((acc, h) => Cons(h, acc))
 
   // Ex 3.13
-  def foldRightViaFoldleft[A, B](l: List[A], z: B)(f: (A, B) => B): B =
+  def foldRightViaFoldLeft[A, B](l: List[A], z: B)(f: (A, B) => B): B =
     foldLeft(reverse(l), z)((b, a) => f(a, b))
 
   // Ex 3.14
@@ -144,4 +144,77 @@ object List {
   def concat[A](as: List[List[A]]): List[A] =
     foldRight(as, Nil: List[A])(append)
 
+  // Ex 3.16
+  def add1(l: List[Int]): List[Int] =
+    foldRight(l, Nil: List[Int])((h, t) => Cons(h + 1, t))
+
+  // Ex 3.17
+  def doubleToString(d: List[Double]): List[String] =
+    foldRight(d, Nil: List[String])((h, t) => Cons(h.toString, t))
+
+  // Ex 3.18
+  def map[A, B](l: List[A])(f: A => B): List[B] =
+    foldRight(l, Nil: List[B])((h, t) => Cons(f(h), t))
+  def map1[A, B](l: List[A])(f: A => B): List[B] =
+    foldRightViaFoldLeft(l, Nil: List[B])((h, t) => Cons(f(h), t))
+  def map2[A, B](l: List[A])(f: A => B): List[B] = {
+    val buf = new collection.mutable.ListBuffer[B]
+    def go(l: List[A]): Unit = l match {
+      case Nil        => ()
+      case Cons(h, t) => buf += f(h); go(t)
+    }
+    go(l)
+    List(buf.toList: _*)
+  }
+
+  // Ex 3.19
+  def filter[A](as: List[A])(f: A => Boolean): List[A] =
+    foldRight(as, Nil: List[A])((h, t) => if (f(h)) Cons(h, t) else t)
+  def filter2[A](as: List[A])(f: A => Boolean): List[A] =
+    foldRightViaFoldLeft(as, Nil: List[A])((h, t) => if (f(h)) Cons(h, t) else t)
+  def filter3[A](as: List[A])(f: A => Boolean): List[A] = {
+    def buf = new collection.mutable.ListBuffer[A]
+    def go(l: List[A]): Unit = l match {
+      case Nil        => ()
+      case Cons(h, t) => if (f(h)) buf += h; go(t)
+    }
+    go(as)
+    List(buf.toList: _*)
+  }
+
+  // Ex 3.20
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] =
+    foldRight(as, Nil: List[B])((h, t) => append(f(h), t))
+  def flatMap2[A, B](as: List[A])(f: A => List[B]): List[B] =
+    concat(map(as)(f))
+
+  // Ex 3.21
+  def filterViaFlatMap[A](l: List[A])(f: A => Boolean): List[A] =
+    flatMap(l)(a => if (f(a)) List(a) else Nil)
+
+  // Ex 3.22
+  def addPairWise(a: List[Int], b: List[Int]): List[Int] = (a, b) match {
+    case (Nil, _)                     => Nil
+    case (_, Nil)                     => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addPairWise(t1, t2))
+  }
+
+  // Ex 3.23
+  def zipWith[A, B, C](a: List[A], b: List[B])(f: (A, B) => C): List[C] = (a, b) match {
+    case (Nil, _)                     => Nil
+    case (_, Nil)                     => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
+  }
+
+  // Ex 3.24
+  def startsWith[A](l: List[A], prefix: List[A]): Boolean = (l, prefix) match {
+    case (_, Nil)                              => true
+    case (Cons(h, t), Cons(h2, t2)) if h == h2 => startsWith(t, t2)
+    case _                                     => false
+  }
+  def hasSubSequence[A](sup: List[A], sub: List[A]): Boolean = sup match {
+    case Nil                       => sub == Nil
+    case _ if startsWith(sup, sub) => true
+    case Cons(_, t)                => hasSubSequence(t, sub)
+  }
 }
