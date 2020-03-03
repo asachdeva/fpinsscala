@@ -62,4 +62,17 @@ object Option {
       bb <- b
     } yield f(aa, bb)
 
+  // Ex 4.4
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = a match {
+    case Nil    => Some(Nil)
+    case h :: t => h.flatMap(hh => sequence(t).map(hh :: _))
+  }
+
+  // Ex 4.5
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    a.foldRight[Option[List[B]]](Some(Nil))((h, t) => map2(f(h), t)(_ :: _))
+
+  def sequenceViaTraverse[A](a: List[Option[A]]): Option[List[A]] =
+    traverse(a)(x => x)
+
 }
