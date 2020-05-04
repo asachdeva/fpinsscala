@@ -15,47 +15,53 @@ trait Stream[+A] {
   // Ex 5.1
 
   // The below function can stackoverflow
-  def toListRecursive: List[A] = this match {
-    case Cons(h, t) => h() :: t().toListRecursive
-    case _          => List()
-  }
+  def toListRecursive: List[A] =
+    this match {
+      case Cons(h, t) => h() :: t().toListRecursive
+      case _          => List()
+    }
 
   def toList: List[A] = {
-    def go(s: Stream[A], acc: List[A]): List[A] = s match {
-      case Cons(h, t) => go(t(), h() :: acc)
-      case _          => acc
-    }
+    def go(s: Stream[A], acc: List[A]): List[A] =
+      s match {
+        case Cons(h, t) => go(t(), h() :: acc)
+        case _          => acc
+      }
     go(this, List()).reverse
   }
 
   def toListFast: List[A] = {
     val buf = new scala.collection.mutable.ListBuffer[A]
-    def go(s: Stream[A]): List[A] = s match {
-      case Cons(h, t) =>
-        buf += h()
-        go(t())
-      case _ => buf.toList
-    }
+    def go(s: Stream[A]): List[A] =
+      s match {
+        case Cons(h, t) =>
+          buf += h()
+          go(t())
+        case _ => buf.toList
+      }
     go(this)
   }
 
   // Ex 5.2
-  def take(n: Int): Stream[A] = this match {
-    case Cons(h, t) if n > 1  => cons(h(), t().take(n - 1))
-    case Cons(h, _) if n == 1 => cons(h(), empty)
-    case _                    => this
-  }
+  def take(n: Int): Stream[A] =
+    this match {
+      case Cons(h, t) if n > 1  => cons(h(), t().take(n - 1))
+      case Cons(h, _) if n == 1 => cons(h(), empty)
+      case _                    => this
+    }
 
-  def drop(n: Int): Stream[A] = this match {
-    case Cons(_, t) if n > 0 => t().drop(n - 1)
-    case _                   => this
-  }
+  def drop(n: Int): Stream[A] =
+    this match {
+      case Cons(_, t) if n > 0 => t().drop(n - 1)
+      case _                   => this
+    }
 
   // Ex 5.3
-  def takeWhile(f: A => Boolean): Stream[A] = this match {
-    case Cons(h, t) if (f(h())) => cons(h(), t().takeWhile(f))
-    case _                      => empty
-  }
+  def takeWhile(f: A => Boolean): Stream[A] =
+    this match {
+      case Cons(h, t) if f(h()) => cons(h(), t().takeWhile(f))
+      case _                    => empty
+    }
 
   def foldRight[B](z: => B)(f: (A, => B) => B): B =
     this match {

@@ -5,38 +5,43 @@ import scala.{Option => _, Either => _, _}
 
 sealed trait Option[+A] {
   // Ex 4.1
-  def map[B](f: A => B): Option[B] = this match {
-    case None    => None
-    case Some(a) => Some(f(a))
-  }
+  def map[B](f: A => B): Option[B] =
+    this match {
+      case None    => None
+      case Some(a) => Some(f(a))
+    }
 
   // the default: => B means will not be evaluated until its
   // needed
   // The B >: A indicates that B must equal to or a supertype
   // of A
-  def getOrElse[B >: A](default: => B): B = this match {
-    case None    => default
-    case Some(a) => a
-  }
+  def getOrElse[B >: A](default: => B): B =
+    this match {
+      case None    => default
+      case Some(a) => a
+    }
 
   def flatMap[B](f: A => Option[B]): Option[B] =
     map(f).getOrElse(None)
-  def flatMap1[B](f: A => Option[B]): Option[B] = this match {
-    case None    => None
-    case Some(a) => f(a)
-  }
+  def flatMap1[B](f: A => Option[B]): Option[B] =
+    this match {
+      case None    => None
+      case Some(a) => f(a)
+    }
 
   def orElse[B >: A](ob: => Option[B]): Option[B] =
     this.map(Some(_)).getOrElse(ob)
-  def orElse1[B >: A](ob: => Option[B]): Option[B] = this match {
-    case None => ob
-    case _    => this
-  }
+  def orElse1[B >: A](ob: => Option[B]): Option[B] =
+    this match {
+      case None => ob
+      case _    => this
+    }
 
-  def filter(f: A => Boolean): Option[A] = this match {
-    case Some(a) if f(a) => this
-    case _               => None
-  }
+  def filter(f: A => Boolean): Option[A] =
+    this match {
+      case Some(a) if f(a) => this
+      case _               => None
+    }
 }
 
 case object None extends Option[Nothing]
@@ -63,10 +68,11 @@ object Option {
     } yield f(aa, bb)
 
   // Ex 4.4
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = a match {
-    case Nil    => Some(Nil)
-    case h :: t => h.flatMap(hh => sequence(t).map(hh :: _))
-  }
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    a match {
+      case Nil    => Some(Nil)
+      case h :: t => h.flatMap(hh => sequence(t).map(hh :: _))
+    }
 
   // Ex 4.5
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =

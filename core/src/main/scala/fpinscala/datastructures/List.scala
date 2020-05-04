@@ -89,11 +89,12 @@ object List {
   def init2[A](l: List[A]): List[A] = {
     import collection.mutable.ListBuffer
     val buf = new ListBuffer[A]
-    def go(cur: List[A]): List[A] = cur match {
-      case Nil          => sys.error("init on an empty list")
-      case Cons(_, Nil) => List(buf.toList: _*)
-      case Cons(h, t)   => buf += h; go(t)
-    }
+    def go(cur: List[A]): List[A] =
+      cur match {
+        case Nil          => sys.error("init on an empty list")
+        case Cons(_, Nil) => List(buf.toList: _*)
+        case Cons(h, t)   => buf += h; go(t)
+      }
     go(l)
   }
 
@@ -159,10 +160,11 @@ object List {
     foldRightViaFoldLeft(l, Nil: List[B])((h, t) => Cons(f(h), t))
   def map2[A, B](l: List[A])(f: A => B): List[B] = {
     val buf = new collection.mutable.ListBuffer[B]
-    def go(l: List[A]): Unit = l match {
-      case Nil        => ()
-      case Cons(h, t) => buf += f(h); go(t)
-    }
+    def go(l: List[A]): Unit =
+      l match {
+        case Nil        => ()
+        case Cons(h, t) => buf += f(h); go(t)
+      }
     go(l)
     List(buf.toList: _*)
   }
@@ -174,10 +176,11 @@ object List {
     foldRightViaFoldLeft(as, Nil: List[A])((h, t) => if (f(h)) Cons(h, t) else t)
   def filter3[A](as: List[A])(f: A => Boolean): List[A] = {
     def buf = new collection.mutable.ListBuffer[A]
-    def go(l: List[A]): Unit = l match {
-      case Nil        => ()
-      case Cons(h, t) => if (f(h)) buf += h; go(t)
-    }
+    def go(l: List[A]): Unit =
+      l match {
+        case Nil        => ()
+        case Cons(h, t) => if (f(h)) buf += h; go(t)
+      }
     go(as)
     List(buf.toList: _*)
   }
@@ -193,28 +196,32 @@ object List {
     flatMap(l)(a => if (f(a)) List(a) else Nil)
 
   // Ex 3.22
-  def addPairWise(a: List[Int], b: List[Int]): List[Int] = (a, b) match {
-    case (Nil, _)                     => Nil
-    case (_, Nil)                     => Nil
-    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addPairWise(t1, t2))
-  }
+  def addPairWise(a: List[Int], b: List[Int]): List[Int] =
+    (a, b) match {
+      case (Nil, _)                     => Nil
+      case (_, Nil)                     => Nil
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addPairWise(t1, t2))
+    }
 
   // Ex 3.23
-  def zipWith[A, B, C](a: List[A], b: List[B])(f: (A, B) => C): List[C] = (a, b) match {
-    case (Nil, _)                     => Nil
-    case (_, Nil)                     => Nil
-    case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
-  }
+  def zipWith[A, B, C](a: List[A], b: List[B])(f: (A, B) => C): List[C] =
+    (a, b) match {
+      case (Nil, _)                     => Nil
+      case (_, Nil)                     => Nil
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
+    }
 
   // Ex 3.24
-  def startsWith[A](l: List[A], prefix: List[A]): Boolean = (l, prefix) match {
-    case (_, Nil)                              => true
-    case (Cons(h, t), Cons(h2, t2)) if h == h2 => startsWith(t, t2)
-    case _                                     => false
-  }
-  def hasSubSequence[A](sup: List[A], sub: List[A]): Boolean = sup match {
-    case Nil                       => sub == Nil
-    case _ if startsWith(sup, sub) => true
-    case Cons(_, t)                => hasSubSequence(t, sub)
-  }
+  def startsWith[A](l: List[A], prefix: List[A]): Boolean =
+    (l, prefix) match {
+      case (_, Nil)                              => true
+      case (Cons(h, t), Cons(h2, t2)) if h == h2 => startsWith(t, t2)
+      case _                                     => false
+    }
+  def hasSubSequence[A](sup: List[A], sub: List[A]): Boolean =
+    sup match {
+      case Nil                       => sub == Nil
+      case _ if startsWith(sup, sub) => true
+      case Cons(_, t)                => hasSubSequence(t, sub)
+    }
 }

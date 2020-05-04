@@ -6,7 +6,7 @@ name := """fpinscala"""
 
 organization in ThisBuild := "asachdeva"
 
-crossScalaVersions in ThisBuild := Seq("2.12.10", "2.13.1")
+crossScalaVersions in ThisBuild := Seq("2.12.11", "2.13.2")
 
 promptTheme := PromptTheme(
   List(
@@ -36,7 +36,9 @@ lazy val commonSettings = Seq(
   resolvers += "Apache public".at("https://repository.apache.org/content/groups/public/"),
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ => false },
+  pomIncludeRepository := { _ =>
+    false
+  },
   pomExtra :=
     <developers>
         <developer>
