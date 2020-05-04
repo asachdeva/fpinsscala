@@ -9,6 +9,7 @@
 */project/build/target
 */project/project.target.config-classes
 */project/plugins/metals.sbt
+/project/metals.sbt
 *-shim.sbt
 *~
 .#*
