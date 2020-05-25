@@ -15,6 +15,7 @@ object Dependencies {
     // Test
     val scalaTest = "3.1.2"
     val scalaCheck = "1.14.3"
+    val MunitVersion = "0.7.7"
 
     // Compiler
     val kindProjector = "0.11.0"
@@ -53,6 +54,7 @@ object Dependencies {
     // Test
     lazy val scalaCheck = "org.scalacheck" %% "scalacheck" % Versions.scalaCheck
     lazy val scalaTest = "org.scalatest" %% "scalatest" % Versions.scalaTest
+    lazy val munit = "org.scalameta" %% "munit" % Versions.MunitVersion
 
     // Compiler
     lazy val kindProjector = ("org.typelevel" %% "kind-projector" % Versions.kindProjector).cross(CrossVersion.full)

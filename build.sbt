@@ -3,10 +3,11 @@ import com.scalapenos.sbt.prompt._
 import Dependencies._
 
 name := """fpinscala"""
-
 organization in ThisBuild := "asachdeva"
-
 crossScalaVersions in ThisBuild := Seq("2.12.11", "2.13.2")
+val MUnitFramework = new TestFramework("munit.Framework")
+
+val format = taskKey[Unit]("Format files using scalafmt and scalafix")
 
 promptTheme := PromptTheme(
   List(
@@ -14,52 +15,34 @@ promptTheme := PromptTheme(
   )
 )
 
+scalacOptions ++= Seq(
+  "-encoding",
+  "UTF-8", // source files are in UTF-8
+  "-deprecation", // warn about use of deprecated APIs
+  "-unchecked", // warn about unchecked type parameters
+  "-feature", // warn about misused language features
+  "-language:higherKinds", // allow higher kinded types without `import scala.language.higherKinds`
+  "-language:postfixOps",
+  "-Xlint", // enable handy linter warnings
+  "-Xfatal-warnings", // turn compiler warnings into errors
+  "-Ywarn-unused"
+)
+
+lazy val testSettings: Seq[Def.Setting[_]] = List(
+  Test / parallelExecution := false,
+  skip.in(publish) := true,
+  fork := true,
+  testFrameworks := List(MUnitFramework),
+  testOptions.in(Test) ++= {
+    List(Tests.Argument(MUnitFramework, "+l", "--verbose"))
+  }
+)
+
 def uuidDep(v: String): Seq[ModuleID] =
   CrossVersion.partialVersion(v) match {
     case Some((2, 13)) => Seq.empty
     case _             => Seq(Libraries.gfcTimeuuid)
   }
-
-lazy val commonSettings = Seq(
-  startYear := Some(2020),
-  libraryDependencies ++= Seq(
-    compilerPlugin(Libraries.kindProjector),
-    compilerPlugin(Libraries.betterMonadicFor),
-    Libraries.catsEffect,
-    Libraries.fs2Core,
-    Libraries.http4sServer,
-    Libraries.http4sDsl,
-    Libraries.scalaTest % Test,
-    Libraries.scalaCheck % Test
-  ),
-  libraryDependencies ++= uuidDep(scalaVersion.value),
-  resolvers += "Apache public".at("https://repository.apache.org/content/groups/public/"),
-  publishMavenStyle := true,
-  publishArtifact in Test := false,
-  pomIncludeRepository := { _ =>
-    false
-  },
-  pomExtra :=
-    <developers>
-        <developer>
-          <id>asachdeva</id>
-          <name>Akshay Sachdeva</name>
-          <url>https://github.com/asachdeva</url>
-        </developer>
-      </developers>
-)
-
-lazy val examplesDependencies = Seq(
-  Libraries.http4sClient,
-  Libraries.http4sCirce,
-  Libraries.circeCore,
-  Libraries.circeGeneric,
-  Libraries.circeGenericX,
-  Libraries.zioCore,
-  Libraries.zioCats,
-  Libraries.log4CatsSlf4j,
-  Libraries.logback % Runtime
-)
 
 lazy val root = project
   .in(file("."))
@@ -75,8 +58,23 @@ lazy val noPublish = Seq(
 
 lazy val `fpinscala` = project
   .in(file("core"))
-  .settings(commonSettings: _*)
-  .settings(libraryDependencies += Libraries.http4sClient % Test)
+  .settings(
+    testSettings,
+    organization := "asachdeva",
+    name := "cats-sandbox",
+    version := "0.0.1-SNAPSHOT",
+    scalaVersion := "2.13.2",
+    libraryDependencies ++= Seq(
+      Libraries.logback,
+      Libraries.munit % Test
+    ),
+    addCompilerPlugin(Libraries.betterMonadicFor),
+    testFrameworks := List(new TestFramework("munit.Framework")),
+    format := {
+      Command.process("scalafmtAll", state.value)
+      Command.process("scalafmtSbt", state.value)
+    }
+  )
 
 // CI build
 addCommandAlias("buildFPInScala", ";clean;+test;")
