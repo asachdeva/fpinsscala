@@ -8,7 +8,6 @@ crossScalaVersions in ThisBuild := Seq("2.12.11", "2.13.2")
 val MUnitFramework = new TestFramework("munit.Framework")
 
 val format = taskKey[Unit]("Format files using scalafmt and scalafix")
-
 promptTheme := PromptTheme(
   List(
     text(_ => "[asachdeva]", fg(64)).padRight(" λ ")
