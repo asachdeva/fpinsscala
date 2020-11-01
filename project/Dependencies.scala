@@ -15,7 +15,7 @@ object Dependencies {
     // Test
     val scalaTest = "3.1.2"
     val scalaCheck = "1.14.3"
-    val MunitVersion = "0.7.13"
+    val MunitVersion = "0.7.15"
 
     // Compiler
     val kindProjector = "0.11.0"
