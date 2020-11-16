@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ github.ref }}-coursier
       - name: "java ${{ matrix.java}} setup"
-        uses: "olafurpg/setup-java@v6"
+        uses: "olafurpg/setup-java@v10"
         with:
           java-version: "${{ matrix.java}}"
       - name: Cache Ivy dependencies
