@@ -4,7 +4,7 @@ import Dependencies._
 
 name := """fpinscala"""
 organization in ThisBuild := "asachdeva"
-crossScalaVersions in ThisBuild := Seq("2.12.11", "2.13.3")
+crossScalaVersions in ThisBuild := Seq("2.12.12", "2.13.4")
 val MUnitFramework = new TestFramework("munit.Framework")
 
 val format = taskKey[Unit]("Format files using scalafmt and scalafix")
