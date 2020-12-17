@@ -62,7 +62,7 @@ lazy val `fpinscala` = project
     organization := "asachdeva",
     name := "cats-sandbox",
     version := "0.0.1-SNAPSHOT",
-    scalaVersion := "2.13.3",
+    scalaVersion := "2.13.4",
     libraryDependencies ++= Seq(
       Libraries.logback,
       Libraries.munit % Test
