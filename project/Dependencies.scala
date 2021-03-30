@@ -3,17 +3,17 @@ import sbt._
 object Dependencies {
 
   object Versions {
-    val catsEffect = "2.1.3"
-    val fs2 = "2.3.0"
-    val http4s = "0.21.4"
-    val circe = "0.12.2"
+    val catsEffect = "3.0.1"
+    val fs2 = "3.0.0"
+    val http4s = "0.21.21"
+    val circe = "0.13.0"
     val gfcTimeuuid = "0.0.8"
     val log4Cats = "1.0.1"
     val zio = "1.0.0-RC17"
     val zioCats = "2.0.0.0-RC10"
 
     // Test
-    val scalaTest = "3.1.2"
+    val scalaTest = "3.2.6"
     val scalaCheck = "1.14.3"
     val MunitVersion = "0.7.23"
 
