@@ -69,6 +69,7 @@ lazy val `fpinscala` = project
     ),
     addCompilerPlugin(Libraries.betterMonadicFor),
     testFrameworks := List(new TestFramework("munit.Framework")),
+    scalafmtOnCompile := true,
     format := {
       Command.process("scalafmtAll", state.value)
       Command.process("scalafmtSbt", state.value)
