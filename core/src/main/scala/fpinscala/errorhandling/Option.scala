@@ -1,7 +1,7 @@
 package fpinscala.errorhandling
 
 // This is meant to hide the default Option in scala package
-import scala.{Option => _, Either => _, _}
+import scala.{Either => _, Option => _, _}
 
 sealed trait Option[+A] {
   // Ex 4.1

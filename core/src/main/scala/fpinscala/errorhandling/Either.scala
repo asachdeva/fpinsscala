@@ -1,6 +1,6 @@
 package fpinscala.errorhandling
 
-import scala.{Option => _, Either => _, _}
+import scala.{Either => _, Option => _, _}
 
 sealed trait Either[+E, +A] {
   // Ex 4.6

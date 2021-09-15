@@ -3,8 +3,8 @@ import com.scalapenos.sbt.prompt._
 import Dependencies._
 
 name := """fpinscala"""
-organization in ThisBuild := "asachdeva"
-crossScalaVersions in ThisBuild := Seq("2.12.15", "2.13.6")
+ThisBuild / organization := "asachdeva"
+ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.6")
 val MUnitFramework = new TestFramework("munit.Framework")
 
 val format = taskKey[Unit]("Format files using scalafmt and scalafix")
@@ -29,7 +29,7 @@ scalacOptions ++= Seq(
 
 lazy val testSettings: Seq[Def.Setting[_]] = List(
   Test / parallelExecution := false,
-  skip.in(publish) := true,
+  publish / skip := true,
   fork := true,
   testFrameworks := List(MUnitFramework),
   testOptions.in(Test) ++= {
@@ -52,7 +52,7 @@ lazy val noPublish = Seq(
   publish := {},
   publishLocal := {},
   publishArtifact := false,
-  skip in publish := true
+  publish / skip := true
 )
 
 lazy val `fpinscala` = project
