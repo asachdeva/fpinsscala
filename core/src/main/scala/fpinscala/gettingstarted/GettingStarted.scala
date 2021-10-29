@@ -2,7 +2,7 @@ package fpinscala.gettingstarted
 
 object MyModule {
 
-  //Monomorphic findfirst
+  // Monomorphic findfirst
   def findFirst(ss: Array[String], key: String): Int = {
     def loop(n: Int): Int =
       if (n >= ss.length) -1
@@ -12,7 +12,7 @@ object MyModule {
     loop(0)
   }
 
-  //Polymorphic findfirst
+  // Polymorphic findfirst
   def findFirst[A](as: Array[A], p: A => Boolean): Int = {
     def loop(n: Int): Int =
       if (n >= as.length) -1
