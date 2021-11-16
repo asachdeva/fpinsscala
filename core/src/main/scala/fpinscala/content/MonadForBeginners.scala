@@ -71,13 +71,13 @@ object MonadForBeginners {
 
   val danielsUrl = "my.store.com/daniel"
 
-  //getUser(danielsUrl).onComplete {
-  //case Success(User(id)) =>
-  //val lastOrder = getLastOrder(id)
-  //lastOrder.onComplete {
-  //case Success(Product(_, price)) =>
-  //val vatIncludedPrice = price * 1.19
-  //}}
+  // getUser(danielsUrl).onComplete {
+  // case Success(User(id)) =>
+  // val lastOrder = getLastOrder(id)
+  // lastOrder.onComplete {
+  // case Success(Product(_, price)) =>
+  // val vatIncludedPrice = price * 1.19
+  // }}
   //
 
   // Example 2

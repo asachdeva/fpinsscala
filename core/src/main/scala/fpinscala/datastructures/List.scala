@@ -77,7 +77,7 @@ object List {
       case Cons(h, t) => Cons(h, append(t, a2))
     }
 
-  /// Ex 3.6
+  // / Ex 3.6
   // This could result in a stackOverflow exception
   def init[A](l: List[A]): List[A] =
     l match {
