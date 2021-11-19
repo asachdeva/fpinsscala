@@ -32,7 +32,7 @@ lazy val testSettings: Seq[Def.Setting[_]] = List(
   publish / skip := true,
   fork := true,
   testFrameworks := List(MUnitFramework),
-  testOptions.in(Test) ++= {
+  Test / testOptions ++= {
     List(Tests.Argument(MUnitFramework, "+l", "--verbose"))
   }
 )
