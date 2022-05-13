@@ -53,7 +53,7 @@ object MonadForBeginners {
     for {
       fName <- Option(firstName)
       lName <- Option(lastName)
-    } yield (Person(fName, lName))
+    } yield Person(fName, lName)
 
   // Example 1
   case class User(id: String)

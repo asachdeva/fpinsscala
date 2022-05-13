@@ -33,7 +33,7 @@ object MyModule {
   }
 
   // Ex 2.3
-  def curry[A, B, C](f: (A, B) => C): A => (B => C) =
+  def curry[A, B, C](f: (A, B) => C): A => B => C =
     a => b => f(a, b)
 
   // Ex 2.4

@@ -39,8 +39,8 @@ lazy val testSettings: Seq[Def.Setting[_]] = List(
 
 def uuidDep(v: String): Seq[ModuleID] =
   CrossVersion.partialVersion(v) match {
-    case Some((2, 13)) => Seq.empty
-    case _             => Seq(Libraries.gfcTimeuuid)
+    case Some(2, 13) => Seq.empty
+    case _           => Seq(Libraries.gfcTimeuuid)
   }
 
 lazy val root = project
