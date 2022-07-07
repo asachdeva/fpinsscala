@@ -53,7 +53,7 @@ object MonadForBeginners {
     for {
       fName <- Option(firstName)
       lName <- Option(lastName)
-    } yield (Person(fName, lName))
+    } yield Person(fName, lName)
 
   // Example 1
   case class User(id: String)
@@ -86,7 +86,7 @@ object MonadForBeginners {
   val vatIncludedPriceFor: Future[Double] = for {
     user <- getUser(danielsUrl)
     product <- getLastOrder(user.id)
-  } yield (product.price * 1.19)
+  } yield product.price * 1.19
 
   // Example 3 doubel for loops
 
