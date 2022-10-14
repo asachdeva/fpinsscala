@@ -4,7 +4,7 @@ import Dependencies._
 
 name := """fpinscala"""
 ThisBuild / organization := "asachdeva"
-ThisBuild / crossScalaVersions := Seq("2.12.17", "2.13.8")
+ThisBuild / crossScalaVersions := Seq("2.12.17", "2.13.10")
 val MUnitFramework = new TestFramework("munit.Framework")
 
 val format = taskKey[Unit]("Format files using scalafmt and scalafix")
@@ -62,7 +62,7 @@ lazy val `fpinscala` = project
     organization := "asachdeva",
     name := "cats-sandbox",
     version := "0.0.1-SNAPSHOT",
-    scalaVersion := "2.13.8",
+    scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       Libraries.logback,
       Libraries.munit % Test
