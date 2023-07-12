@@ -1,7 +1,7 @@
 resolvers += Classpaths.sbtPluginReleases
 resolvers += "Typesafe Repository".at("https://repo.typesafe.com/typesafe/releases/")
 
-addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.4.2")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.4.4")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.18")
 addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.2.1")
 addSbtPlugin("com.scalapenos" % "sbt-prompt" % "1.0.2")
